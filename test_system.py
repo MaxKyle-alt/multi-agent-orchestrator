@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from src.agents import agent_registry
 from src.models import TaskDefinition
-from src.orchestrator import TaskOrchestrator
+from src.orchestrator import TaskManager
 
 
 async def test_system():
@@ -16,14 +16,14 @@ async def test_system():
     
     print(f"📋 Available agents: {agent_registry.get_available_types()}")
     
-    orch = TaskOrchestrator()
+    orch = TaskManager()
     await orch.start()
-    print("✅ Orchestrator started")
+    print("✅ Task Manager started")
     
     task = TaskDefinition(
         task_name='test_data_fetch',
         agent_type='data_fetcher',
-        task_params={'url': 'https://api.example.com', 'source_type': 'api'}
+        task_params={'url': 'https://api.example.com', 'source': 'api'}
     )
     
     task_id = await orch.submit_task(task)
